@@ -5,12 +5,18 @@ import Home from '../screens/Home';
 import {IRootStackParamList} from './types';
 import BottomTabNavigator from './BottomTabNavigator';
 import Notifications from '../screens/Notifications';
+import Splash from '../screens/Splash';
 
 const Stack = createNativeStackNavigator<IRootStackParamList>();
 
 const StackNavigator = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Splash"
+        component={Splash}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="Main"
         options={{headerShown: false}}
