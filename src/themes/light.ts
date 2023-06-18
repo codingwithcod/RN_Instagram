@@ -1,21 +1,24 @@
 import {createTheme} from '@shopify/restyle';
 
-const palette = {
+export const p = {
   black: '#0B0B0B',
   white: '#F0F2F3',
   lighGray: '#c1c2c2',
+  red: 'red',
 };
 
 const theme = createTheme({
   colors: {
-    white: palette.white,
-    black: palette.black,
-    lighGray: palette.lighGray,
+    white: p.white,
+    black: p.black,
+    lighGray: p.lighGray,
+    red: p.red,
   },
   spacing: {
-    s: 8,
-    m: 16,
-    l: 24,
+    xs: 4,
+    sm: 8,
+    md: 16,
+    lg: 24,
     xl: 40,
   },
   textVariants: {
