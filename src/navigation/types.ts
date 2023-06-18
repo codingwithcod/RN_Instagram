@@ -1,5 +1,6 @@
 export type IRootStackParamList = {
   Main: undefined;
+  Notifications: undefined;
 };
 
 export type IRootTabParamList = {

@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../screens/Home';
 import {IRootStackParamList} from './types';
 import BottomTabNavigator from './BottomTabNavigator';
+import Notifications from '../screens/Notifications';
 
 const Stack = createNativeStackNavigator<IRootStackParamList>();
 
@@ -18,6 +19,11 @@ const StackNavigator = () => {
             <BottomTabNavigator />
           </SafeAreaView>
         )}
+      />
+      <Stack.Screen
+        name="Notifications"
+        component={Notifications}
+        options={{headerShown: true}}
       />
     </Stack.Navigator>
   );

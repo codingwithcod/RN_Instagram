@@ -12,12 +12,17 @@ import Box from '../themes/Box';
 import {
   HomeFillIcon,
   HomeIcon,
+  InstaGramLetterIcon,
+  LikeFillIcon,
+  LikeIcon,
   PlusIcon,
   ProfileIcon,
   ReelsIcon,
   SearchIcon,
   SearchThikIcon,
+  ShareIcon,
 } from '../imges';
+import InstaGramLetterLogo from '../svg/Instagram-letter-logo.svg';
 
 const Tab = createBottomTabNavigator<IRootTabParamList>();
 
@@ -48,6 +53,16 @@ const BottomTabNavigator = () => {
               />
             </Box>
           ),
+          headerShown: true,
+          headerTitle: () => (
+            <Box>
+              <Image
+                source={InstaGramLetterIcon}
+                style={{width: 120, height: 40}}
+              />
+            </Box>
+          ),
+          headerTitleAlign: 'left',
         }}
       />
       <Tab.Screen

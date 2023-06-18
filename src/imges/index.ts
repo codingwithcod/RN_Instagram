@@ -1,7 +1,7 @@
 export const HomeIcon = require('./home.png');
 export const HomeFillIcon = require('./home-fill.png');
 export const CommentIcon = require('./home-fill.png');
-export const LikeIcon = require('./heart .png');
+export const LikeIcon = require('./heart.png');
 export const LikeFillIcon = require('./heart-fill.png');
 export const ThreeDotsIcon = require('./dots.png');
 export const MetaIcon = require('./meta.png');
@@ -15,4 +15,5 @@ export const ShareIcon = require('./share.png');
 export const ThreeLineIcon = require('./three-line.png');
 export const InstagramLogoIcon = require('./instagram-logo.png');
 export const ProfileIcon = require('./profile.png');
+export const InstaGramLetterIcon = require('./instagram-letter.png');
 // export const Icon = require('');
