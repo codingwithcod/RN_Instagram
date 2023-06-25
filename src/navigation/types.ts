@@ -2,6 +2,7 @@ export type IRootStackParamList = {
   Splash: undefined;
   Main: undefined;
   Notifications: undefined;
+  ShowStory: undefined;
 };
 
 export type IRootTabParamList = {

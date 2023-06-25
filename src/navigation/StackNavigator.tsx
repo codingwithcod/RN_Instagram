@@ -6,6 +6,7 @@ import {IRootStackParamList} from './types';
 import BottomTabNavigator from './BottomTabNavigator';
 import Notifications from '../screens/Notifications';
 import Splash from '../screens/Splash';
+import ShowStory from '../screens/ShowStory';
 
 const Stack = createNativeStackNavigator<IRootStackParamList>();
 
@@ -30,6 +31,11 @@ const StackNavigator = () => {
         name="Notifications"
         component={Notifications}
         options={{headerShown: true}}
+      />
+      <Stack.Screen
+        name="ShowStory"
+        component={ShowStory}
+        options={{headerShown: false, animation: 'fade'}}
       />
     </Stack.Navigator>
   );
