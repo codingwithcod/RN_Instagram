@@ -4,7 +4,17 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {FC, useEffect} from 'react';
 import {Image} from 'react-native';
 import {TouchableOpacity} from 'react-native';
-import {LikeFillIcon, LikeIcon, ShareIcon} from '../imges';
+import {FlatList} from 'react-native';
+import SingleStory from '../components/SingleStory';
+import Stories from '../components/Stories';
+import {
+  CommentIcon,
+  LikeFillIcon,
+  LikeIcon,
+  SaveIcon,
+  ShareIcon,
+  ThreeDotsIcon,
+} from '../imges';
 import {IRootStackParamList, IRootTabParamList} from '../navigation/types';
 import Box from '../themes/Box';
 import Text from '../themes/Text';
@@ -13,6 +23,12 @@ type IProps = CompositeScreenProps<
   BottomTabScreenProps<IRootTabParamList, 'Home'>,
   NativeStackScreenProps<IRootStackParamList>
 >;
+
+const singleStoryItem = {
+  username: 'ninjan',
+  img: 'https://lh3.googleusercontent.com/ogw/AOLn63HW_267NF3b_1GW49FKH6xzWHUdxQynjA99jwl8=s64-c-mo',
+  isSeen: false,
+};
 
 const Home: FC<IProps> = ({navigation}) => {
   useEffect(() => {
@@ -36,10 +52,61 @@ const Home: FC<IProps> = ({navigation}) => {
   }, [navigation]);
   return (
     <Box flex={1} bg="white">
-      <Text variant="body">Jai Shree Ram</Text>
-      <Image
-        source={LikeFillIcon}
-        style={{width: 50, height: 50, tintColor: 'red'}}
+      {/* <Stories /> */}
+      <FlatList
+        data={[1, 2, 3, 4, 5, 6]}
+        ListHeaderComponent={() => <Stories />}
+        renderItem={() => (
+          <Box>
+            <Box
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="space-between">
+              <Box flexDirection="row" alignItems="center">
+                <SingleStory item={singleStoryItem} />
+                <Box>
+                  <Text>sureshkumar_09</Text>
+                  <Text>RAnthamore Ganesh Temple</Text>
+                </Box>
+              </Box>
+              <Box>
+                <Image source={ThreeDotsIcon} style={{width: 30, height: 30}} />
+              </Box>
+            </Box>
+            <Box>
+              <Image
+                source={{
+                  uri: 'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_1280.jpg',
+                }}
+                style={{width: '100%', height: 320}}
+              />
+            </Box>
+            <Box
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="space-between"
+              m="sm"
+              mx="md">
+              <Box flexDirection="row">
+                <Image source={LikeIcon} style={{width: 30, height: 30}} />
+                <Box mx="sm" />
+                <Image source={CommentIcon} style={{width: 30, height: 30}} />
+                <Box mx="sm" />
+                <Image source={ShareIcon} style={{width: 30, height: 30}} />
+              </Box>
+              <Box>
+                <Image source={SaveIcon} style={{width: 30, height: 30}} />
+              </Box>
+            </Box>
+            <Box m="sm" mx="md">
+              <Text fontSize={20} fontWeight="bold">
+                14 Likes
+              </Text>
+              <Text fontSize={16}>sureshkumar_09 Alone Safer</Text>
+              <Text fontSize={16}>5 hours ago .</Text>
+            </Box>
+          </Box>
+        )}
       />
     </Box>
   );
