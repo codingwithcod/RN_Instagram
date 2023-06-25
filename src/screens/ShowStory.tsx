@@ -5,12 +5,9 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   useWindowDimensions,
-  View,
 } from 'react-native';
 import React, {FC, useRef, useState} from 'react';
 import Box from '../themes/Box';
@@ -129,9 +126,9 @@ const ShowStory: FC<IProps> = ({navigation}) => {
         {content.map((item, index) => {
           return (
             <Box
+              key={index}
               flex={1}
               height={3}
-              //   width={'10%'}
               bg={'lighGray'}
               mx="xs"
               justifyContent="space-between"
