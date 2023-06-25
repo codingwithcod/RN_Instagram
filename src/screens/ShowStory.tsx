@@ -18,6 +18,7 @@ import {p} from '../themes/light';
 import {LikeIcon, ShareIcon} from '../imges';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {IRootStackParamList} from '../navigation/types';
+import Video from 'react-native-video';
 
 const data = [
   {
@@ -31,13 +32,28 @@ const data = [
     finish: 0,
   },
   {
+    content: require('../imges/storyAssets/video1.mp4'),
+    type: 'video',
+    finish: 0,
+  },
+  {
     content: require('../imges/storyAssets/img1.jpg'),
     type: 'image',
     finish: 0,
   },
   {
-    content: require('../imges/storyAssets/img2.jpg'),
-    type: 'image',
+    content: require('../imges/storyAssets/video2.mp4'),
+    type: 'video',
+    finish: 0,
+  },
+  {
+    content: require('../imges/storyAssets/video3.mp4'),
+    type: 'video',
+    finish: 0,
+  },
+  {
+    content: require('../imges/storyAssets/video4.mp4'),
+    type: 'video',
     finish: 0,
   },
 ];
@@ -133,14 +149,29 @@ const ShowStory: FC<IProps> = ({navigation}) => {
 
       <ScrollView scrollEnabled={false}>
         <Box height={height - 70} width={width}>
-          <Image
-            source={content[current].content}
-            onLoadEnd={() => {
-              progress.setValue(0);
-              start();
-            }}
-            style={{width: '100%', height: '100%', resizeMode: 'cover'}}
-          />
+          {content[current].type === 'video' ? (
+            <Video
+              source={content[current].content}
+              resizeMode="cover"
+              paused={false}
+              onReadyForDisplay={() => start()}
+              onLoad={() => {
+                setIsLoaded(true);
+                start();
+              }}
+              style={{width: '100%', height: '100%'}}
+            />
+          ) : (
+            <Image
+              source={content[current].content}
+              onLoadEnd={() => {
+                progress.setValue(0);
+                start();
+              }}
+              style={{width: '100%', height: '100%', resizeMode: 'cover'}}
+            />
+          )}
+
           <Box
             width={'100%'}
             height={'100%'}
