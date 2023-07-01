@@ -1,24 +1,50 @@
-import {FlatList, Image, useWindowDimensions} from 'react-native';
-import React, {useState} from 'react';
+import {FlatList, Image, StatusBar, useWindowDimensions} from 'react-native';
+import React, {useCallback, useState} from 'react';
 import Box from '../themes/Box';
 import Video from 'react-native-video';
 import Text from '../themes/Text';
 import {
   CameraIcon,
   CommentIcon,
+  LikeFillIcon,
   LikeIcon,
   MusicIcon,
   ShareIcon,
   ThreeDotsIcon,
 } from '../images';
+import {TapGestureHandler} from 'react-native-gesture-handler';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withSpring,
+} from 'react-native-reanimated';
+
+const ImageComponent = Animated.createAnimatedComponent(Image);
 
 const Reels = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   console.log('--------------selectedIndex --------->', selectedIndex);
 
   const {width, height} = useWindowDimensions();
+  const scale = useSharedValue(0);
+  const doubleTap = useCallback(() => {
+    scale.value = withSpring(1, undefined, isFinished => {
+      if (isFinished) {
+        scale.value = withDelay(300, withSpring(0));
+      }
+    });
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{scale: Math.max(scale.value, 0)}],
+    };
+  });
+
   return (
-    <Box height={height - 55} bg="black">
+    <Box height={height - 40} style={{backgroundColor: 'blue'}}>
+      <StatusBar backgroundColor={'#000'} />
       <FlatList
         pagingEnabled
         showsVerticalScrollIndicator={false}
@@ -38,7 +64,7 @@ const Reels = () => {
         renderItem={({item, index}) => {
           return (
             <Box>
-              <Box height={height - 55} bg="black">
+              <Box height={height - 40} bg="black">
                 <Video
                   source={item}
                   resizeMode="cover"
@@ -59,12 +85,12 @@ const Reels = () => {
                     flexDirection="row"
                     mt="sm"
                     marginHorizontal="md">
-                    <Text fontSize={24} fontWeight="bold" color="white">
+                    <Text fontSize={20} fontWeight="bold" color="white">
                       Reels
                     </Text>
                     <Image
                       source={CameraIcon}
-                      style={{width: 35, height: 35, tintColor: '#fff'}}
+                      style={{width: 25, height: 25, tintColor: '#fff'}}
                     />
                   </Box>
                   <Box
@@ -82,7 +108,11 @@ const Reels = () => {
                           bg="lighGray"
                           borderRadius={20}
                         />
-                        <Text color="white" fontSize={20} ml="sm">
+                        <Text
+                          color="white"
+                          fontSize={16}
+                          ml="sm"
+                          fontWeight="bold">
                           Manoj Solanki
                         </Text>
                         <Box
@@ -93,16 +123,16 @@ const Reels = () => {
                           borderRadius={5}
                           justifyContent="center"
                           alignItems="center">
-                          <Text color="white" fontSize={20} ml="sm">
+                          <Text color="white" fontSize={15} ml="sm">
                             Follow
                           </Text>
                         </Box>
                       </Box>
-                      <Box m="md">
-                        <Text color="white" fontSize={16}>
+                      <Box m="md" mb="lg">
+                        <Text color="white" fontSize={13}>
                           Save these awesome chrome extenstion fo..
                         </Text>
-                        <Text color="white" fontSize={18}>
+                        <Text color="white" fontSize={14}>
                           ismaity . GOAT
                         </Text>
                       </Box>
@@ -113,12 +143,12 @@ const Reels = () => {
                       justifyContent="space-around"
                       position="absolute"
                       right={0}
-                      bottom={0}
+                      bottom={15}
                       height={'80%'}>
                       <Box>
                         <Image
                           source={LikeIcon}
-                          style={{width: 25, height: 25, tintColor: '#fff'}}
+                          style={{width: 20, height: 20, tintColor: '#fff'}}
                         />
                         <Text color="white" fontSize={10}>
                           18.4k
@@ -127,7 +157,7 @@ const Reels = () => {
                       <Box>
                         <Image
                           source={CommentIcon}
-                          style={{width: 25, height: 25, tintColor: '#fff'}}
+                          style={{width: 20, height: 20, tintColor: '#fff'}}
                         />
                         <Text color="white" fontSize={10}>
                           18.4k
@@ -136,7 +166,7 @@ const Reels = () => {
                       <Box>
                         <Image
                           source={ShareIcon}
-                          style={{width: 25, height: 25, tintColor: '#fff'}}
+                          style={{width: 20, height: 20, tintColor: '#fff'}}
                         />
                         <Text color="white" fontSize={10}>
                           18.4k
@@ -145,7 +175,7 @@ const Reels = () => {
                       <Box>
                         <Image
                           source={ThreeDotsIcon}
-                          style={{width: 25, height: 25, tintColor: '#fff'}}
+                          style={{width: 20, height: 20, tintColor: '#fff'}}
                         />
                         <Text color="white" fontSize={10}>
                           18.4k
@@ -154,13 +184,34 @@ const Reels = () => {
                       <Box>
                         <Image
                           source={MusicIcon}
-                          style={{width: 25, height: 25}}
+                          style={{width: 20, height: 20}}
                         />
                       </Box>
                     </Box>
                   </Box>
                 </Box>
               </Box>
+              <TapGestureHandler
+                maxDelayMs={550}
+                numberOfTaps={2}
+                onActivated={doubleTap}>
+                <Animated.View
+                  style={{
+                    position: 'absolute',
+                    height,
+                    width,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <ImageComponent
+                    source={LikeFillIcon}
+                    style={[
+                      {width: 100, height: 100, tintColor: '#fff'},
+                      animatedStyle,
+                    ]}
+                  />
+                </Animated.View>
+              </TapGestureHandler>
             </Box>
           );
         }}
