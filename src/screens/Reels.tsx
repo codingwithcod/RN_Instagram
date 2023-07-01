@@ -110,7 +110,7 @@ const Reels = () => {
                         />
                         <Text
                           color="white"
-                          fontSize={16}
+                          fontSize={14}
                           ml="sm"
                           fontWeight="bold">
                           Manoj Solanki
@@ -123,16 +123,20 @@ const Reels = () => {
                           borderRadius={5}
                           justifyContent="center"
                           alignItems="center">
-                          <Text color="white" fontSize={15} ml="sm">
+                          <Text
+                            color="white"
+                            fontSize={14}
+                            ml="sm"
+                            fontWeight="700">
                             Follow
                           </Text>
                         </Box>
                       </Box>
                       <Box m="md" mb="lg">
-                        <Text color="white" fontSize={13}>
+                        <Text color="white" fontSize={12}>
                           Save these awesome chrome extenstion fo..
                         </Text>
-                        <Text color="white" fontSize={14}>
+                        <Text color="white" fontSize={12}>
                           ismaity . GOAT
                         </Text>
                       </Box>

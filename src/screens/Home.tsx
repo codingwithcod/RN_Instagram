@@ -36,18 +36,18 @@ const Home: FC<IProps> = ({navigation}) => {
       headerRight: () => (
         <Box
           flexDirection="row"
-          width={'35%'}
+          width={'30%'}
           justifyContent="space-between"
           mr="md">
           <TouchableOpacity
             onPress={() => navigation.navigate('Notifications')}>
             <Image
               source={LikeIcon}
-              style={{width: 25, height: 25, tintColor: '#000'}}
+              style={{width: 23, height: 23, tintColor: '#000'}}
             />
           </TouchableOpacity>
           <TouchableOpacity>
-            <Image source={MessengerIcon} style={{width: 25, height: 25}} />
+            <Image source={MessengerIcon} style={{width: 23, height: 23}} />
           </TouchableOpacity>
         </Box>
       ),
@@ -106,11 +106,11 @@ const Home: FC<IProps> = ({navigation}) => {
               </Box>
             </Box>
             <Box m="sm" mx="md">
-              <Text fontSize={20} fontWeight="bold">
+              <Text fontSize={16} fontWeight="bold">
                 14 Likes
               </Text>
-              <Text fontSize={16}>sureshkumar_09 Alone Safer</Text>
-              <Text fontSize={16}>5 hours ago .</Text>
+              <Text fontSize={14}>sureshkumar_09 Alone Safer</Text>
+              <Text fontSize={14}>5 hours ago .</Text>
             </Box>
           </Box>
         )}
