@@ -16,4 +16,6 @@ export const InstagramLogoIcon = require('./instagram-logo.png');
 export const ProfileIcon = require('./profile.png');
 export const InstaGramLetterIcon = require('./instagram-letter.png');
 export const MetaIcon = require('./Instagram-meta.png');
+export const MessengerIcon = require('./messenger.png');
+
 // export const Icon = require('');

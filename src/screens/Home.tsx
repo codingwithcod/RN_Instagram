@@ -9,9 +9,9 @@ import SingleStory from '../components/SingleStory';
 import Stories from '../components/Stories';
 import {
   CommentIcon,
-  LikeFillIcon,
   LikeIcon,
   SaveIcon,
+  MessengerIcon,
   ShareIcon,
   ThreeDotsIcon,
 } from '../images';
@@ -47,7 +47,7 @@ const Home: FC<IProps> = ({navigation}) => {
             />
           </TouchableOpacity>
           <TouchableOpacity>
-            <Image source={ShareIcon} style={{width: 30, height: 30}} />
+            <Image source={MessengerIcon} style={{width: 30, height: 30}} />
           </TouchableOpacity>
         </Box>
       ),
