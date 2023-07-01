@@ -22,7 +22,6 @@ import {
   SearchThikIcon,
   ShareIcon,
 } from '../images';
-import InstaGramLetterLogo from '../svg/Instagram-letter-logo.svg';
 
 const Tab = createBottomTabNavigator<IRootTabParamList>();
 
@@ -94,6 +93,7 @@ const BottomTabNavigator = () => {
         name="Reels"
         component={Reels}
         options={{
+          headerShown: false,
           tabBarIcon: ({focused}) => (
             <Box>
               <Image source={ReelsIcon} style={{width: 30, height: 30}} />
