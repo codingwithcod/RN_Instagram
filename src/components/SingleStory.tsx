@@ -1,8 +1,14 @@
-import {Image, ImageSourcePropType, StyleSheet} from 'react-native';
+import {
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import React, {FC} from 'react';
 import Box from '../themes/Box';
 import Text from '../themes/Text';
 import LinearGradient from 'react-native-linear-gradient';
+import {useNavigation} from '@react-navigation/native';
 // interface IStory {
 //   username: string;
 //   img: ImageSourcePropType;
@@ -12,18 +18,25 @@ import LinearGradient from 'react-native-linear-gradient';
 const SingleStory = ({item}) => {
   // console.log('username ---------------<>', item);
   const {username, img, isSeen} = item;
+  const navigation = useNavigation<any>();
+
+  const gotoShowStoryScreen = () => {
+    navigation.navigate('ShowStory');
+  };
 
   return (
-    <Box m="sm" justifyContent="center" alignItems="center">
-      <LinearGradient
-        colors={['#FEDA75', '#FA7E1E', '#D62976', '#962FBF']}
-        style={styles.linearGradient}>
-        <Box borderRadius={50} borderColor="white" borderWidth={2}>
-          <Image source={{uri: img}} style={styles.img} />
-        </Box>
-      </LinearGradient>
-      <Text>{username}</Text>
-    </Box>
+    <TouchableWithoutFeedback onPress={gotoShowStoryScreen}>
+      <Box m="sm" justifyContent="center" alignItems="center">
+        <LinearGradient
+          colors={['#FEDA75', '#FA7E1E', '#D62976', '#962FBF']}
+          style={styles.linearGradient}>
+          <Box borderRadius={50} borderColor="white" borderWidth={2}>
+            <Image source={{uri: img}} style={styles.img} />
+          </Box>
+        </LinearGradient>
+        <Text>{username}</Text>
+      </Box>
+    </TouchableWithoutFeedback>
   );
 };
 

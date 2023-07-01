@@ -14,7 +14,7 @@ import {
   SaveIcon,
   ShareIcon,
   ThreeDotsIcon,
-} from '../imges';
+} from '../images';
 import {IRootStackParamList, IRootTabParamList} from '../navigation/types';
 import Box from '../themes/Box';
 import Text from '../themes/Text';
@@ -41,7 +41,10 @@ const Home: FC<IProps> = ({navigation}) => {
           mr="md">
           <TouchableOpacity
             onPress={() => navigation.navigate('Notifications')}>
-            <Image source={LikeIcon} style={{width: 30, height: 30}} />
+            <Image
+              source={LikeIcon}
+              style={{width: 30, height: 30, tintColor: '#000'}}
+            />
           </TouchableOpacity>
           <TouchableOpacity>
             <Image source={ShareIcon} style={{width: 30, height: 30}} />

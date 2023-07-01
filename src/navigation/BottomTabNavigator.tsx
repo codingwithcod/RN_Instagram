@@ -21,7 +21,7 @@ import {
   SearchIcon,
   SearchThikIcon,
   ShareIcon,
-} from '../imges';
+} from '../images';
 import InstaGramLetterLogo from '../svg/Instagram-letter-logo.svg';
 
 const Tab = createBottomTabNavigator<IRootTabParamList>();
