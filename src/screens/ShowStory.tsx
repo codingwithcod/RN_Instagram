@@ -12,44 +12,44 @@ import {
 import React, {FC, useRef, useState} from 'react';
 import Box from '../themes/Box';
 import {p} from '../themes/light';
-import {LikeIcon, ShareIcon} from '../imges';
+import {LikeIcon, ShareIcon} from '../images';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {IRootStackParamList} from '../navigation/types';
 import Video from 'react-native-video';
 
 const data = [
   {
-    content: require('../imges/storyAssets/img1.jpg'),
+    content: require('../images/storyAssets/img1.jpg'),
     type: 'image',
     finish: 0,
   },
   {
-    content: require('../imges/storyAssets/img2.jpg'),
+    content: require('../images/storyAssets/img2.jpg'),
     type: 'image',
     finish: 0,
   },
   {
-    content: require('../imges/storyAssets/video1.mp4'),
+    content: require('../images/storyAssets/video1.mp4'),
     type: 'video',
     finish: 0,
   },
   {
-    content: require('../imges/storyAssets/img1.jpg'),
+    content: require('../images/storyAssets/img1.jpg'),
     type: 'image',
     finish: 0,
   },
   {
-    content: require('../imges/storyAssets/video2.mp4'),
+    content: require('../images/storyAssets/video2.mp4'),
     type: 'video',
     finish: 0,
   },
   {
-    content: require('../imges/storyAssets/video3.mp4'),
+    content: require('../images/storyAssets/video3.mp4'),
     type: 'video',
     finish: 0,
   },
   {
-    content: require('../imges/storyAssets/video4.mp4'),
+    content: require('../images/storyAssets/video4.mp4'),
     type: 'video',
     finish: 0,
   },

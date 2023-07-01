@@ -1,7 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import Box from '../themes/Box';
 import {Image, StatusBar} from 'react-native';
-import {InstagramLogoIcon, MetaIcon} from '../imges';
+import {InstagramLogoIcon, MetaIcon} from '../images';
 import Text from '../themes/Text';
 import {p} from '../themes/light';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';

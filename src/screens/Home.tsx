@@ -14,7 +14,7 @@ import {
   SaveIcon,
   ShareIcon,
   ThreeDotsIcon,
-} from '../imges';
+} from '../images';
 import {IRootStackParamList, IRootTabParamList} from '../navigation/types';
 import Box from '../themes/Box';
 import Text from '../themes/Text';
