@@ -43,11 +43,11 @@ const Home: FC<IProps> = ({navigation}) => {
             onPress={() => navigation.navigate('Notifications')}>
             <Image
               source={LikeIcon}
-              style={{width: 30, height: 30, tintColor: '#000'}}
+              style={{width: 25, height: 25, tintColor: '#000'}}
             />
           </TouchableOpacity>
           <TouchableOpacity>
-            <Image source={MessengerIcon} style={{width: 30, height: 30}} />
+            <Image source={MessengerIcon} style={{width: 25, height: 25}} />
           </TouchableOpacity>
         </Box>
       ),
@@ -64,16 +64,20 @@ const Home: FC<IProps> = ({navigation}) => {
             <Box
               flexDirection="row"
               alignItems="center"
-              justifyContent="space-between">
+              justifyContent="space-between"
+              px="xs"
+              pr="sm">
               <Box flexDirection="row" alignItems="center">
-                <SingleStory item={singleStoryItem} />
+                <Box>
+                  <SingleStory item={singleStoryItem} />
+                </Box>
                 <Box>
                   <Text>sureshkumar_09</Text>
                   <Text>RAnthamore Ganesh Temple</Text>
                 </Box>
               </Box>
               <Box>
-                <Image source={ThreeDotsIcon} style={{width: 30, height: 30}} />
+                <Image source={ThreeDotsIcon} style={{width: 20, height: 20}} />
               </Box>
             </Box>
             <Box>
@@ -91,14 +95,14 @@ const Home: FC<IProps> = ({navigation}) => {
               m="sm"
               mx="md">
               <Box flexDirection="row">
-                <Image source={LikeIcon} style={{width: 30, height: 30}} />
+                <Image source={LikeIcon} style={{width: 20, height: 20}} />
                 <Box mx="sm" />
-                <Image source={CommentIcon} style={{width: 30, height: 30}} />
+                <Image source={CommentIcon} style={{width: 20, height: 20}} />
                 <Box mx="sm" />
-                <Image source={ShareIcon} style={{width: 30, height: 30}} />
+                <Image source={ShareIcon} style={{width: 20, height: 20}} />
               </Box>
               <Box>
-                <Image source={SaveIcon} style={{width: 30, height: 30}} />
+                <Image source={SaveIcon} style={{width: 20, height: 20}} />
               </Box>
             </Box>
             <Box m="sm" mx="md">
