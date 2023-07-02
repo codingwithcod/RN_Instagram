@@ -32,7 +32,6 @@ const theme = createTheme({
     },
     defaults: {
       fontSize: 12,
-      lineHeight: 20,
     },
   },
 });

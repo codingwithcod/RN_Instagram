@@ -205,7 +205,7 @@ const ShowStory: FC<IProps> = ({navigation}) => {
                   borderWidth: 1,
                   borderColor: p.lighGray,
                   borderRadius: 30,
-                  paddingLeft: 10,
+                  paddingLeft: 15,
                   width: '100%',
                   height: 45,
                   color: '#FFF',
@@ -218,11 +218,11 @@ const ShowStory: FC<IProps> = ({navigation}) => {
               justifyContent="space-evenly">
               <Image
                 source={LikeIcon}
-                style={{width: 30, height: 30, tintColor: '#fff'}}
+                style={{width: 20, height: 20, tintColor: '#fff'}}
               />
               <Image
                 source={ShareIcon}
-                style={{width: 30, height: 30, tintColor: '#fff'}}
+                style={{width: 20, height: 20, tintColor: '#fff'}}
               />
             </Box>
           </Box>

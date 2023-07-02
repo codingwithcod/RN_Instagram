@@ -13,20 +13,17 @@ import {
   HomeFillIcon,
   HomeIcon,
   InstaGramLetterIcon,
-  LikeFillIcon,
-  LikeIcon,
   PlusIcon,
   ProfileIcon,
   ReelsIcon,
   SearchIcon,
   SearchThikIcon,
-  ShareIcon,
 } from '../images';
-import InstaGramLetterLogo from '../svg/Instagram-letter-logo.svg';
-
+import {useColorScheme} from 'react-native';
 const Tab = createBottomTabNavigator<IRootTabParamList>();
 
 const BottomTabNavigator = () => {
+  const colorScheme = useColorScheme();
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -49,7 +46,7 @@ const BottomTabNavigator = () => {
             <Box>
               <Image
                 source={focused ? HomeFillIcon : HomeIcon}
-                style={{width: 30, height: 30}}
+                style={{width: 20, height: 20}}
               />
             </Box>
           ),
@@ -58,7 +55,11 @@ const BottomTabNavigator = () => {
             <Box>
               <Image
                 source={InstaGramLetterIcon}
-                style={{width: 120, height: 40}}
+                style={{
+                  width: 120,
+                  height: 40,
+                  tintColor: colorScheme === 'dark' ? '#fff' : '#000',
+                }}
               />
             </Box>
           ),
@@ -73,7 +74,7 @@ const BottomTabNavigator = () => {
             <Box>
               <Image
                 source={focused ? SearchThikIcon : SearchIcon}
-                style={{width: 25, height: 25}}
+                style={{width: 18, height: 18}}
               />
             </Box>
           ),
@@ -85,7 +86,7 @@ const BottomTabNavigator = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <Box>
-              <Image source={PlusIcon} style={{width: 30, height: 30}} />
+              <Image source={PlusIcon} style={{width: 20, height: 20}} />
             </Box>
           ),
         }}
@@ -94,9 +95,10 @@ const BottomTabNavigator = () => {
         name="Reels"
         component={Reels}
         options={{
+          headerShown: false,
           tabBarIcon: ({focused}) => (
             <Box>
-              <Image source={ReelsIcon} style={{width: 30, height: 30}} />
+              <Image source={ReelsIcon} style={{width: 20, height: 20}} />
             </Box>
           ),
         }}
@@ -107,7 +109,7 @@ const BottomTabNavigator = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <View style={styles.profile}>
-              <Image source={ProfileIcon} style={{width: 30, height: 30}} />
+              <Image source={ProfileIcon} style={{width: 20, height: 20}} />
             </View>
           ),
         }}

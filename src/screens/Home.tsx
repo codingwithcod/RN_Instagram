@@ -9,9 +9,9 @@ import SingleStory from '../components/SingleStory';
 import Stories from '../components/Stories';
 import {
   CommentIcon,
-  LikeFillIcon,
   LikeIcon,
   SaveIcon,
+  MessengerIcon,
   ShareIcon,
   ThreeDotsIcon,
 } from '../images';
@@ -36,18 +36,18 @@ const Home: FC<IProps> = ({navigation}) => {
       headerRight: () => (
         <Box
           flexDirection="row"
-          width={'35%'}
+          width={'30%'}
           justifyContent="space-between"
           mr="md">
           <TouchableOpacity
             onPress={() => navigation.navigate('Notifications')}>
             <Image
               source={LikeIcon}
-              style={{width: 30, height: 30, tintColor: '#000'}}
+              style={{width: 23, height: 23, tintColor: '#000'}}
             />
           </TouchableOpacity>
           <TouchableOpacity>
-            <Image source={ShareIcon} style={{width: 30, height: 30}} />
+            <Image source={MessengerIcon} style={{width: 23, height: 23}} />
           </TouchableOpacity>
         </Box>
       ),
@@ -64,16 +64,20 @@ const Home: FC<IProps> = ({navigation}) => {
             <Box
               flexDirection="row"
               alignItems="center"
-              justifyContent="space-between">
+              justifyContent="space-between"
+              px="xs"
+              pr="sm">
               <Box flexDirection="row" alignItems="center">
-                <SingleStory item={singleStoryItem} />
+                <Box>
+                  <SingleStory item={singleStoryItem} />
+                </Box>
                 <Box>
                   <Text>sureshkumar_09</Text>
                   <Text>RAnthamore Ganesh Temple</Text>
                 </Box>
               </Box>
               <Box>
-                <Image source={ThreeDotsIcon} style={{width: 30, height: 30}} />
+                <Image source={ThreeDotsIcon} style={{width: 20, height: 20}} />
               </Box>
             </Box>
             <Box>
@@ -91,22 +95,22 @@ const Home: FC<IProps> = ({navigation}) => {
               m="sm"
               mx="md">
               <Box flexDirection="row">
-                <Image source={LikeIcon} style={{width: 30, height: 30}} />
+                <Image source={LikeIcon} style={{width: 20, height: 20}} />
                 <Box mx="sm" />
-                <Image source={CommentIcon} style={{width: 30, height: 30}} />
+                <Image source={CommentIcon} style={{width: 20, height: 20}} />
                 <Box mx="sm" />
-                <Image source={ShareIcon} style={{width: 30, height: 30}} />
+                <Image source={ShareIcon} style={{width: 20, height: 20}} />
               </Box>
               <Box>
-                <Image source={SaveIcon} style={{width: 30, height: 30}} />
+                <Image source={SaveIcon} style={{width: 20, height: 20}} />
               </Box>
             </Box>
             <Box m="sm" mx="md">
-              <Text fontSize={20} fontWeight="bold">
+              <Text fontSize={16} fontWeight="bold">
                 14 Likes
               </Text>
-              <Text fontSize={16}>sureshkumar_09 Alone Safer</Text>
-              <Text fontSize={16}>5 hours ago .</Text>
+              <Text fontSize={14}>sureshkumar_09 Alone Safer</Text>
+              <Text fontSize={14}>5 hours ago .</Text>
             </Box>
           </Box>
         )}
