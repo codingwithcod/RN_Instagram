@@ -1,5 +1,6 @@
 export type IRootStackParamList = {
   Splash: undefined;
+  Login: undefined;
   Main: undefined;
   Notifications: undefined;
   ShowStory: undefined;
