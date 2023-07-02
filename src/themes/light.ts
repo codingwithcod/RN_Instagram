@@ -4,6 +4,7 @@ export const p = {
   black: '#0B0B0B',
   white: '#F0F2F3',
   lighGray: '#c1c2c2',
+  xLighGray: '#dadfe8',
   blue: '#0000FF',
   red: 'red',
 };
@@ -15,6 +16,7 @@ const theme = createTheme({
     lighGray: p.lighGray,
     blue: p.blue,
     red: p.red,
+    xLighGray: p.xLighGray,
   },
   spacing: {
     xs: 4,
