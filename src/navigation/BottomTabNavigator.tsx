@@ -1,7 +1,7 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {IRootTabParamList} from './types';
+import {IRootStackParamList, IRootTabParamList} from './types';
 import Home from '../screens/Home';
 import Search from '../screens/Search';
 import AddPost from '../screens/AddPost';
@@ -20,10 +20,19 @@ import {
   SearchThikIcon,
 } from '../images';
 import {useColorScheme} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Tab = createBottomTabNavigator<IRootTabParamList>();
 
 const BottomTabNavigator = () => {
   const colorScheme = useColorScheme();
+  const [profile, setProfile] = useState<string | null>();
+  useEffect(() => {
+    const fetchImage = async () => {
+      const img = await AsyncStorage.getItem('USER_PHOTO');
+      setProfile(img);
+    };
+    fetchImage();
+  }, []);
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -109,7 +118,14 @@ const BottomTabNavigator = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <View style={styles.profile}>
-              <Image source={ProfileIcon} style={{width: 20, height: 20}} />
+              {profile ? (
+                <Image
+                  source={{uri: profile}}
+                  style={{width: 22, height: 22, borderRadius: 10}}
+                />
+              ) : (
+                <Image source={ProfileIcon} style={{width: 20, height: 20}} />
+              )}
             </View>
           ),
         }}
