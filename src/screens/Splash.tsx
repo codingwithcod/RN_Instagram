@@ -6,14 +6,26 @@ import Text from '../themes/Text';
 import {p} from '../themes/light';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {IRootStackParamList} from '../navigation/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type IProps = NativeStackScreenProps<IRootStackParamList, 'Splash'>;
 
 const Splash: FC<IProps> = ({navigation}) => {
-  useEffect(() => {}, []);
-  setTimeout(() => {
-    navigation.replace('Main');
-  }, 1000);
+  useEffect(() => {
+    setTimeout(() => {
+      isUserLoggedIn();
+    }, 1000);
+  }, []);
+
+  const isUserLoggedIn = async () => {
+    const user = await AsyncStorage.getItem('USER_EMAIL');
+    if (user) {
+      navigation.replace('Main');
+    } else {
+      navigation.replace('Login');
+    }
+  };
+
   return (
     <Box flex={1} justifyContent="center" alignItems="center">
       <StatusBar backgroundColor={p.white} barStyle="dark-content" />
