@@ -17,6 +17,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {p} from '../../themes/light';
 import BottomModal from './BottomModal';
 import Loader from '../../components/Loader';
+import {ImagePickerResponse} from 'react-native-image-picker';
+import uploadFile from '../../utils/uploadFile';
+import firestore from '@react-native-firebase/firestore';
+import uuid from 'react-native-uuid';
 
 type IProps = CompositeScreenProps<
   BottomTabScreenProps<IRootTabParamList, 'AddPost'>,
@@ -25,8 +29,10 @@ type IProps = CompositeScreenProps<
 
 const AddPost: FC<IProps> = ({navigation}) => {
   const [profile, setProfile] = useState<string | null>();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [imageData, setImageData] = useState<ImagePickerResponse>({});
+  const [caption, setCaption] = useState<string>('');
 
   useEffect(() => {
     navigation.setOptions({
@@ -48,8 +54,46 @@ const AddPost: FC<IProps> = ({navigation}) => {
     fetchImage();
   }, []);
 
-  const handleSharePost = () => {
-    setIsLoading(true);
+  const handleSharePost = async () => {
+    if (!imageData.assets) {
+      console.log(' ---!> Please select Image ');
+    } else if (caption === '') {
+      console.log(' ---!> Please write something on caption ');
+    } else {
+      setIsLoading(true);
+      const userName = await AsyncStorage.getItem('USER_NAME');
+      const userId = await AsyncStorage.getItem('USERID');
+      const userPhoto = await AsyncStorage.getItem('USER_PHOTO');
+
+      if (imageData.assets[0]?.fileName && imageData.assets[0]?.uri) {
+        const imageUrl = await uploadFile(
+          imageData.assets[0]?.fileName,
+          imageData.assets[0]?.uri,
+        );
+        const postId = uuid.v4().toString();
+        firestore()
+          .collection('posts')
+          .doc(postId)
+          .set({
+            postId,
+            userId,
+            userName,
+            userPhoto,
+            caption,
+            image: imageUrl,
+          })
+          .then(res => {
+            setIsLoading(false);
+            setImageData({});
+            setCaption('');
+            navigation.goBack();
+          })
+          .catch(error => {
+            setIsLoading(false);
+            console.log(error);
+          });
+      }
+    }
   };
 
   return (
@@ -57,17 +101,26 @@ const AddPost: FC<IProps> = ({navigation}) => {
       <Box flex={1} p="md" alignItems="center">
         <Box height={300} width={'100%'} borderWidth={1}>
           <TouchableOpacity onPress={() => setIsModalOpen(true)}>
-            <Box
-              width={'100%'}
-              height={'100%'}
-              justifyContent="center"
-              alignItems="center"
-              style={{backgroundColor: 'rgba(0,0,0,0.2)'}}>
-              <Image source={CameraIcon} style={{width: 50, height: 50}} />
-              <Text fontSize={20} mt="sm">
-                Tap to upload an image
-              </Text>
-            </Box>
+            {imageData.assets ? (
+              <Box width={'100%'} height={'100%'}>
+                <Image
+                  source={{uri: imageData.assets[0].uri}}
+                  style={{width: '100%', height: '100%'}}
+                />
+              </Box>
+            ) : (
+              <Box
+                width={'100%'}
+                height={'100%'}
+                justifyContent="center"
+                alignItems="center"
+                style={{backgroundColor: 'rgba(0,0,0,0.2)'}}>
+                <Image source={CameraIcon} style={{width: 50, height: 50}} />
+                <Text fontSize={20} mt="sm">
+                  Tap to upload an image
+                </Text>
+              </Box>
+            )}
           </TouchableOpacity>
         </Box>
         <Box mt="lg" />
@@ -96,6 +149,8 @@ const AddPost: FC<IProps> = ({navigation}) => {
             <TextInput
               placeholder="Write a caption..."
               style={{fontSize: 18, color: p.lighGray}}
+              value={caption}
+              onChangeText={txt => setCaption(txt)}
             />
           </Box>
         </KeyboardAvoidingView>
@@ -118,6 +173,7 @@ const AddPost: FC<IProps> = ({navigation}) => {
         <BottomModal
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
+          setImageData={setImageData}
         />
         <Loader isLoading={isLoading} title="Post Sharing ..." />
       </Box>

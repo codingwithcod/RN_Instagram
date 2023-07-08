@@ -8,13 +8,45 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {CameraColorIcon, GalleryIcon} from '../../images';
+import requestCameraPermission from '../../utils/requestCameraPermission';
+import {
+  launchCamera,
+  launchImageLibrary,
+  ImagePickerResponse,
+} from 'react-native-image-picker';
 
 interface IProps {
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  setImageData: Dispatch<SetStateAction<ImagePickerResponse>>;
 }
 
-const BottomModal: FC<IProps> = ({isModalOpen, setIsModalOpen}) => {
+const BottomModal: FC<IProps> = ({
+  isModalOpen,
+  setIsModalOpen,
+  setImageData,
+}) => {
+  const handleOpenCamera = async () => {
+    const isPermission = await requestCameraPermission();
+    if (isPermission) {
+      const res = await launchCamera({mediaType: 'photo'});
+      if (!res.didCancel) {
+        setImageData(res);
+        setIsModalOpen(false);
+      }
+    }
+  };
+  const handleOpenGallery = async () => {
+    const isPermission = await requestCameraPermission();
+    if (isPermission) {
+      const res = await launchImageLibrary({mediaType: 'photo'});
+      if (!res.didCancel) {
+        setImageData(res);
+        setIsModalOpen(false);
+      }
+    }
+  };
+
   return (
     <Modal transparent visible={isModalOpen}>
       <TouchableWithoutFeedback onPress={() => setIsModalOpen(false)}>
@@ -30,7 +62,7 @@ const BottomModal: FC<IProps> = ({isModalOpen, setIsModalOpen}) => {
             bg="xLighGray"
             justifyContent="space-around"
             alignItems="center">
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleOpenCamera}>
               <Box justifyContent="center" alignItems="center">
                 <Image
                   source={CameraColorIcon}
@@ -41,7 +73,7 @@ const BottomModal: FC<IProps> = ({isModalOpen, setIsModalOpen}) => {
                 </Text>
               </Box>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleOpenGallery}>
               <Box justifyContent="center" alignItems="center">
                 <Image source={GalleryIcon} style={{width: 60, height: 60}} />
                 <Text fontSize={16} color="black" mt="sm">
