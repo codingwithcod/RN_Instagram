@@ -22,5 +22,8 @@ export const MusicIcon = require('./music.png');
 export const GoogleIcon = require('./google.png');
 export const TagIcon = require('./tag.png');
 export const GridIcon = require('./grid.png');
+export const CloseIcon = require('./close.png');
+export const CameraColorIcon = require('./camera-color.png');
+export const GalleryIcon = require('./gallery.png');
 
 // export const Icon = require('');
