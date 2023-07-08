@@ -8,7 +8,7 @@ import SingleStory from './SingleStory';
 const Stories = () => {
   // console.log('stories ---------------<>', stories);
   return (
-    <Box margin="sm">
+    <Box>
       <FlatList
         data={stories}
         horizontal

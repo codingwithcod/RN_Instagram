@@ -20,5 +20,7 @@ export const MessengerIcon = require('./messenger.png');
 export const CameraIcon = require('./camera.png');
 export const MusicIcon = require('./music.png');
 export const GoogleIcon = require('./google.png');
+export const TagIcon = require('./tag.png');
+export const GridIcon = require('./grid.png');
 
 // export const Icon = require('');

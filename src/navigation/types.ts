@@ -4,6 +4,7 @@ export type IRootStackParamList = {
   Main: undefined;
   Notifications: undefined;
   ShowStory: undefined;
+  EditProfile: undefined;
 };
 
 export type IRootTabParamList = {

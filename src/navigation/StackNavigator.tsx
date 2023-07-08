@@ -8,6 +8,7 @@ import Notifications from '../screens/Notifications';
 import Splash from '../screens/Splash';
 import ShowStory from '../screens/ShowStory';
 import Login from '../screens/Login';
+import EditProfile from '../screens/EditProfile';
 
 const Stack = createNativeStackNavigator<IRootStackParamList>();
 
@@ -42,6 +43,11 @@ const StackNavigator = () => {
         name="ShowStory"
         component={ShowStory}
         options={{headerShown: false, animation: 'fade'}}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{headerShown: true, animation: 'fade'}}
       />
     </Stack.Navigator>
   );
