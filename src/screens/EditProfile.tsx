@@ -42,7 +42,7 @@ const EditProfile: FC<IProps> = ({navigation, route}) => {
 
   useEffect(() => {
     navigation.setOptions({
-      header: () => <></>,
+      headerShown: false,
     });
   }, []);
 

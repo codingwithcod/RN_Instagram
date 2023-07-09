@@ -59,9 +59,10 @@ const ConfirmGalleryModal: FC<IProps> = ({
             height={120}
             borderRadius={10}
             elevation={5}
-            bg="xLighGray"
+            // bg="xLighGray"
             justifyContent="space-around"
-            alignItems="center">
+            alignItems="center"
+            style={{backgroundColor: '#fff'}}>
             <TouchableOpacity onPress={handleOpenCamera}>
               <Box justifyContent="center" alignItems="center">
                 <Image
