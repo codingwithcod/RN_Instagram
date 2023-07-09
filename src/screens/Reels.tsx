@@ -1,5 +1,5 @@
 import {FlatList, Image, StatusBar, useWindowDimensions} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import Box from '../themes/Box';
 import Video from 'react-native-video';
 import Text from '../themes/Text';
@@ -19,10 +19,18 @@ import Animated, {
   withDelay,
   withSpring,
 } from 'react-native-reanimated';
+import {CompositeScreenProps} from '@react-navigation/native';
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {IRootStackParamList, IRootTabParamList} from '../navigation/types';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {p} from '../themes/light';
 
 const ImageComponent = Animated.createAnimatedComponent(Image);
-
-const Reels = () => {
+type IProps = CompositeScreenProps<
+  BottomTabScreenProps<IRootTabParamList, 'Reels'>,
+  NativeStackScreenProps<IRootStackParamList>
+>;
+const Reels: FC<IProps> = ({navigation}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   console.log('--------------selectedIndex --------->', selectedIndex);
 
@@ -44,7 +52,7 @@ const Reels = () => {
 
   return (
     <Box height={height - 40} style={{backgroundColor: 'blue'}}>
-      <StatusBar backgroundColor={'#000'} />
+      <StatusBar backgroundColor={'#000'} barStyle={'light-content'} />
       <FlatList
         pagingEnabled
         showsVerticalScrollIndicator={false}
