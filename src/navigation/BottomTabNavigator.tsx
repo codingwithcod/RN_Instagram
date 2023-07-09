@@ -2,8 +2,8 @@ import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {FC, useEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {IRootStackParamList, IRootTabParamList} from './types';
-import Home from '../screens/Home';
-import Search from '../screens/Search';
+import Home from '../screens/home/Home';
+import Search from '../screens/search/Search';
 import AddPost from '../screens/addpost/AddPost';
 import Reels from '../screens/Reels';
 import Profile from '../screens/Profile';
@@ -104,14 +104,17 @@ const BottomTabNavigator = () => {
           ),
           header(props) {
             return (
-              <Box bg="lighGray" p="sm" px="md">
+              <Box p="sm" px="md">
                 <Box
                   width={'65%'}
                   flexDirection="row"
                   alignItems="center"
                   justifyContent="space-between">
                   <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image source={CloseIcon} style={{width: 20, height: 20}} />
+                    <Image
+                      source={CloseIcon}
+                      style={{width: 20, height: 20, tintColor: '#000'}}
+                    />
                   </TouchableOpacity>
                   <Text fontSize={25} fontWeight="500" color="black">
                     New Post
