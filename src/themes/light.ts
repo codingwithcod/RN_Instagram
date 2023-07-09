@@ -6,6 +6,7 @@ export const p = {
   lighGray: '#c1c2c2',
   xLighGray: '#dadfe8',
   blue: '#0000FF',
+  blueFaceBook: '#4287f5',
   red: 'red',
 };
 
@@ -15,6 +16,7 @@ const theme = createTheme({
     black: p.black,
     lighGray: p.lighGray,
     blue: p.blue,
+    blue2: p.blueFaceBook,
     red: p.red,
     xLighGray: p.xLighGray,
   },

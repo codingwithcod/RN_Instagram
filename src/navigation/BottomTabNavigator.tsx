@@ -1,15 +1,16 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {FC, useEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {IRootStackParamList, IRootTabParamList} from './types';
-import Home from '../screens/Home';
-import Search from '../screens/Search';
-import AddPost from '../screens/AddPost';
+import Home from '../screens/home/Home';
+import Search from '../screens/search/Search';
+import AddPost from '../screens/addpost/AddPost';
 import Reels from '../screens/Reels';
 import Profile from '../screens/Profile';
 import {p} from '../themes/light';
 import Box from '../themes/Box';
 import {
+  CloseIcon,
   HomeFillIcon,
   HomeIcon,
   InstaGramLetterIcon,
@@ -21,9 +22,12 @@ import {
 } from '../images';
 import {useColorScheme} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Text from '../themes/Text';
+import {useNavigation} from '@react-navigation/native';
 const Tab = createBottomTabNavigator<IRootTabParamList>();
 
 const BottomTabNavigator = () => {
+  const navigation = useNavigation();
   const colorScheme = useColorScheme();
   const [profile, setProfile] = useState<string | null>();
   useEffect(() => {
@@ -98,6 +102,27 @@ const BottomTabNavigator = () => {
               <Image source={PlusIcon} style={{width: 20, height: 20}} />
             </Box>
           ),
+          header(props) {
+            return (
+              <Box p="sm" px="md">
+                <Box
+                  width={'65%'}
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="space-between">
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                      source={CloseIcon}
+                      style={{width: 20, height: 20, tintColor: '#000'}}
+                    />
+                  </TouchableOpacity>
+                  <Text fontSize={25} fontWeight="500" color="black">
+                    New Post
+                  </Text>
+                </Box>
+              </Box>
+            );
+          },
         }}
       />
       <Tab.Screen
