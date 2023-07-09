@@ -27,5 +27,6 @@ export const CameraColorIcon = require('./camera-color.png');
 export const GalleryIcon = require('./gallery.png');
 export const CheckIcon = require('./check.png');
 export const LocationIcon = require('./location.png');
+export const DownIcon = require('./down.png');
 
 // export const Icon = require('');

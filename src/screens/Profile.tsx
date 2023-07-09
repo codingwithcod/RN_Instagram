@@ -4,14 +4,22 @@ import {
   FlatList,
   useWindowDimensions,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 import React, {FC, useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {IRootStackParamList, IRootTabParamList} from '../navigation/types';
-import {CompositeScreenProps} from '@react-navigation/native';
+import {CompositeScreenProps, useIsFocused} from '@react-navigation/native';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import Box from '../themes/Box';
-import {GridIcon, MenuIcon, PlusIcon, ReelsIcon, TagIcon} from '../images';
+import {
+  DownIcon,
+  GridIcon,
+  MenuIcon,
+  PlusIcon,
+  ReelsIcon,
+  TagIcon,
+} from '../images';
 import Text from '../themes/Text';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import firestore from '@react-native-firebase/firestore';
@@ -22,33 +30,42 @@ import ReelsGrid from '../components/ReelsGrid';
 import TagPostGrid from '../components/TagPostGrid';
 import ProfileTabNavigator from '../navigation/ProfileTabNavigator';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {p} from '../themes/light';
 
 type IProps = CompositeScreenProps<
   BottomTabScreenProps<IRootTabParamList, 'Profile'>,
   NativeStackScreenProps<IRootStackParamList>
 >;
 
-interface IUser {
-  id: string;
-  name: string | null;
+export interface IUser {
+  userId: string;
+  name: string;
   email: string;
-  photo: string | undefined;
-  familyName: string | null;
-  givenName: string | null;
+  photo: string;
+  bio: string | undefined;
+  website: string | undefined;
 }
 const Profile: FC<IProps> = ({navigation}) => {
   const {width} = useWindowDimensions();
   const [profile, setProfile] = useState<IUser>();
   const [activeTab, setActiveTab] = useState<'POST' | 'REELS' | 'TAGS'>('POST');
 
+  const isFocus = useIsFocused();
+
   useEffect(() => {
     navigation.setOptions({
       header: () => (
         <Box flexDirection="row" py="md" px="md" justifyContent="space-between">
-          <Box>
-            <Text fontSize={18} fontWeight="bold">
-              manojSolanki
+          <Box flexDirection="row">
+            <Text fontSize={18} fontWeight="bold" color="black">
+              {profile?.email.substring(0, profile.email.indexOf('@'))}
             </Text>
+            <Box ml="xs" justifyContent="flex-end">
+              <Image
+                source={DownIcon}
+                style={{width: 20, height: 20, tintColor: '#000'}}
+              />
+            </Box>
           </Box>
           <Box flexDirection="row" width={'20%'} justifyContent="space-between">
             <TouchableOpacity
@@ -59,14 +76,17 @@ const Profile: FC<IProps> = ({navigation}) => {
               />
             </TouchableOpacity>
             <TouchableOpacity>
-              <Image source={MenuIcon} style={{width: 23, height: 23}} />
+              <Image
+                source={MenuIcon}
+                style={{width: 23, height: 23, tintColor: '#000'}}
+              />
             </TouchableOpacity>
           </Box>
         </Box>
       ),
     });
     getProfileInfo();
-  }, [navigation]);
+  }, [navigation, isFocus]);
 
   const getProfileInfo = async () => {
     const email = await AsyncStorage.getItem('USER_EMAIL');
@@ -93,6 +113,8 @@ const Profile: FC<IProps> = ({navigation}) => {
 
   return (
     <Box>
+      <StatusBar backgroundColor={p.white} />
+
       <Box mx="md">
         <Box
           width={'100%'}
@@ -150,13 +172,14 @@ const Profile: FC<IProps> = ({navigation}) => {
           <Text fontSize={16} fontWeight="500" color="black">
             {profile?.name}
           </Text>
-          <Text fontSize={16}>Education</Text>
+          {/* <Text fontSize={16}>Education</Text> */}
           <Text fontSize={16} color="black" letterSpacing={1}>
-            Programming Needs Patiesnts..🤝
+            {profile?.bio}
           </Text>
         </Box>
         <Box mt="md">
-          <TouchableOpacity onPress={() => navigation.push('EditProfile')}>
+          <TouchableOpacity
+            onPress={() => navigation.push('EditProfile', {profile: profile})}>
             <Box
               bg="xLighGray"
               justifyContent="center"

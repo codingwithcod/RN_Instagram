@@ -1,14 +1,14 @@
 import React, {Dispatch, FC, SetStateAction} from 'react';
-import Box from '../../themes/Box';
-import Text from '../../themes/Text';
+import Box from '../themes/Box';
+import Text from '../themes/Text';
 import {
   Image,
   Modal,
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {CameraColorIcon, GalleryIcon} from '../../images';
-import requestCameraPermission from '../../utils/requestCameraPermission';
+import {CameraColorIcon, GalleryIcon} from '../images';
+import requestCameraPermission from '../utils/requestCameraPermission';
 import {
   launchCamera,
   launchImageLibrary,
@@ -21,7 +21,7 @@ interface IProps {
   setImageData: Dispatch<SetStateAction<ImagePickerResponse>>;
 }
 
-const BottomModal: FC<IProps> = ({
+const ConfirmGalleryModal: FC<IProps> = ({
   isModalOpen,
   setIsModalOpen,
   setImageData,
@@ -29,7 +29,7 @@ const BottomModal: FC<IProps> = ({
   const handleOpenCamera = async () => {
     const isPermission = await requestCameraPermission();
     if (isPermission) {
-      const res = await launchCamera({mediaType: 'photo'});
+      const res = await launchCamera({mediaType: 'photo', quality: 0.8});
       if (!res.didCancel) {
         setImageData(res);
         setIsModalOpen(false);
@@ -39,7 +39,7 @@ const BottomModal: FC<IProps> = ({
   const handleOpenGallery = async () => {
     const isPermission = await requestCameraPermission();
     if (isPermission) {
-      const res = await launchImageLibrary({mediaType: 'photo'});
+      const res = await launchImageLibrary({mediaType: 'photo', quality: 0.5});
       if (!res.didCancel) {
         setImageData(res);
         setIsModalOpen(false);
@@ -88,4 +88,4 @@ const BottomModal: FC<IProps> = ({
   );
 };
 
-export default BottomModal;
+export default ConfirmGalleryModal;

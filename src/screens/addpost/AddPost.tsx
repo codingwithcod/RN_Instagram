@@ -15,7 +15,7 @@ import {
 import {CameraIcon} from '../../images';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {p} from '../../themes/light';
-import BottomModal from './BottomModal';
+import ConfirmGalleryModal from '../../components/ConfirmGalleryModal';
 import Loader from '../../components/Loader';
 import {ImagePickerResponse} from 'react-native-image-picker';
 import uploadFile from '../../utils/uploadFile';
@@ -173,7 +173,7 @@ const AddPost: FC<IProps> = ({navigation}) => {
           </Box>
         </TouchableOpacity>
 
-        <BottomModal
+        <ConfirmGalleryModal
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
           setImageData={setImageData}

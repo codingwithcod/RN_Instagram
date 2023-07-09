@@ -48,7 +48,7 @@ const StackNavigator = () => {
       <Stack.Screen
         name="EditProfile"
         component={EditProfile}
-        options={{headerShown: true, animation: 'fade'}}
+        options={{headerShown: true, animation: 'slide_from_right'}}
       />
       <Stack.Screen
         name="AddReels"
