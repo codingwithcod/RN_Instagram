@@ -81,6 +81,8 @@ const AddPost: FC<IProps> = ({navigation}) => {
             userPhoto,
             caption,
             image: imageUrl,
+            likes: [],
+            createdAt: Date.now(),
           })
           .then(res => {
             setIsLoading(false);
@@ -98,8 +100,8 @@ const AddPost: FC<IProps> = ({navigation}) => {
 
   return (
     <ScrollView style={{flex: 1}}>
-      <Box flex={1} p="md" alignItems="center">
-        <Box height={300} width={'100%'} borderWidth={1}>
+      <Box flex={1} p="sm" alignItems="center">
+        <Box height={300} width={'100%'} borderWidth={0.5} borderRadius={10}>
           <TouchableOpacity onPress={() => setIsModalOpen(true)}>
             {imageData.assets ? (
               <Box width={'100%'} height={'100%'}>
@@ -114,7 +116,7 @@ const AddPost: FC<IProps> = ({navigation}) => {
                 height={'100%'}
                 justifyContent="center"
                 alignItems="center"
-                style={{backgroundColor: 'rgba(0,0,0,0.2)'}}>
+                style={{backgroundColor: 'rgba(0,0,255,0.051)'}}>
                 <Image source={CameraIcon} style={{width: 50, height: 50}} />
                 <Text fontSize={20} mt="sm">
                   Tap to upload an image
@@ -132,17 +134,18 @@ const AddPost: FC<IProps> = ({navigation}) => {
             borderBottomWidth={0.51}
             borderColor="black">
             <Box
-              width={50}
-              height={50}
+              width={40}
+              height={40}
               borderWidth={1}
-              borderRadius={25}
+              borderRadius={20}
+              borderColor="lighGray"
               justifyContent="center"
               alignItems="center"
               mr="md">
               {profile && (
                 <Image
                   source={{uri: profile}}
-                  style={{height: 40, width: 40, borderRadius: 20}}
+                  style={{height: 35, width: 35, borderRadius: 20}}
                 />
               )}
             </Box>
