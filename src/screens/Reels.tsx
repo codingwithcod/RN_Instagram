@@ -1,4 +1,10 @@
-import {FlatList, Image, StatusBar, useWindowDimensions} from 'react-native';
+import {
+  FlatList,
+  Image,
+  StatusBar,
+  TouchableOpacity,
+  useWindowDimensions,
+} from 'react-native';
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import Box from '../themes/Box';
 import Video from 'react-native-video';
@@ -92,14 +98,18 @@ const Reels: FC<IProps> = ({navigation}) => {
                     alignItems="center"
                     flexDirection="row"
                     mt="sm"
+                    zIndex={50}
                     marginHorizontal="md">
                     <Text fontSize={20} fontWeight="bold" color="white">
                       Reels
                     </Text>
-                    <Image
-                      source={CameraIcon}
-                      style={{width: 25, height: 25, tintColor: '#fff'}}
-                    />
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate('AddReels')}>
+                      <Image
+                        source={CameraIcon}
+                        style={{width: 25, height: 25, tintColor: '#fff'}}
+                      />
+                    </TouchableOpacity>
                   </Box>
                   <Box
                     flexDirection="row"
@@ -210,6 +220,7 @@ const Reels: FC<IProps> = ({navigation}) => {
                 <Animated.View
                   style={{
                     position: 'absolute',
+                    top: 40,
                     height,
                     width,
                     justifyContent: 'center',
