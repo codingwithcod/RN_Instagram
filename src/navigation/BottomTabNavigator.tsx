@@ -77,6 +77,10 @@ const BottomTabNavigator = () => {
             </Box>
           ),
           headerTitleAlign: 'left',
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
+          },
         }}
       />
       <Tab.Screen
