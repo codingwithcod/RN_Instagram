@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import React, {FC, useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {IRootStackParamList, IRootTabParamList} from '../navigation/types';
+import {IRootStackParamList, IRootTabParamList} from '../../navigation/types';
 import {CompositeScreenProps, useIsFocused} from '@react-navigation/native';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import Box from '../themes/Box';
+import Box from '../../themes/Box';
 import {
   DownIcon,
   GridIcon,
@@ -19,18 +19,18 @@ import {
   PlusIcon,
   ReelsIcon,
   TagIcon,
-} from '../images';
-import Text from '../themes/Text';
+} from '../../images';
+import Text from '../../themes/Text';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import firestore from '@react-native-firebase/firestore';
-import SingleStory from '../components/SingleStory';
-import Stories from '../components/Stories';
-import PostGrid from '../components/PostGrid';
-import ReelsGrid from '../components/ReelsGrid';
-import TagPostGrid from '../components/TagPostGrid';
-import ProfileTabNavigator from '../navigation/ProfileTabNavigator';
+import SingleStory from '../../components/SingleStory';
+import Stories from '../../components/Stories';
+import PostGrid from '../../components/PostGrid';
+import ReelsGrid from '../../components/ReelsGrid';
+import TagPostGrid from '../../components/TagPostGrid';
+import ProfileTabNavigator from '../../navigation/ProfileTabNavigator';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {p} from '../themes/light';
+import {p} from '../../themes/light';
 
 type IProps = CompositeScreenProps<
   BottomTabScreenProps<IRootTabParamList, 'Profile'>,

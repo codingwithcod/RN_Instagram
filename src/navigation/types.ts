@@ -1,4 +1,4 @@
-import {IUser} from '../screens/Profile';
+import {IUser} from '../screens/profile/Profile';
 
 export type IRootStackParamList = {
   Splash: undefined;
