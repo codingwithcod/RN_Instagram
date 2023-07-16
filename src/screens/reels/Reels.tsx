@@ -1,46 +1,63 @@
 import {
   FlatList,
-  Image,
+  RefreshControl,
   StatusBar,
-  TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import Box from '../../themes/Box';
-import Video from 'react-native-video';
-import Text from '../../themes/Text';
-import {
-  CameraIcon,
-  CommentIcon,
-  LikeFillIcon,
-  LikeIcon,
-  MusicIcon,
-  ShareIcon,
-  ThreeDotsIcon,
-} from '../../images';
-import {TapGestureHandler} from 'react-native-gesture-handler';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withDelay,
-  withSpring,
-} from 'react-native-reanimated';
+
+import {useSharedValue, withDelay, withSpring} from 'react-native-reanimated';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {IRootStackParamList, IRootTabParamList} from '../../navigation/types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {p} from '../../themes/light';
+import firestore from '@react-native-firebase/firestore';
+import Reel from './Reel';
 
-const ImageComponent = Animated.createAnimatedComponent(Image);
+export interface IReel {
+  reelId: string;
+  userId: string;
+  userName: string;
+  userPhoto: string;
+  caption: string;
+  video: string;
+  likes: string[];
+  createdAt: string;
+}
+
 type IProps = CompositeScreenProps<
   BottomTabScreenProps<IRootTabParamList, 'Reels'>,
   NativeStackScreenProps<IRootStackParamList>
 >;
-const Reels: FC<IProps> = ({navigation}) => {
+const Reels: FC<IProps> = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  console.log('--------------selectedIndex --------->', selectedIndex);
+  const [reels, setReels] = useState<IReel[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const {width, height} = useWindowDimensions();
+  useEffect(() => {
+    getAllReels();
+  }, []);
+
+  /** fetching reels data  */
+  const getAllReels = useCallback(async () => {
+    console.log('----------- i am  getAll reels --->');
+    firestore()
+      .collection('reels')
+      .orderBy('createdAt', 'desc')
+      .get()
+      .then(res => {
+        const postData = res.docs.map(doc => {
+          return doc.data() as IReel;
+        });
+        setReels(postData);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+  const {height} = useWindowDimensions();
   const scale = useSharedValue(0);
   const doubleTap = useCallback(() => {
     scale.value = withSpring(1, undefined, isFinished => {
@@ -50,194 +67,28 @@ const Reels: FC<IProps> = ({navigation}) => {
     });
   }, []);
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{scale: Math.max(scale.value, 0)}],
-    };
-  });
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await getAllReels();
+    setRefreshing(false);
+  };
 
   return (
-    <Box height={height - 40} style={{backgroundColor: 'blue'}}>
+    <Box height={height - 40} style={{backgroundColor: 'black'}}>
       <StatusBar backgroundColor={'#000'} barStyle={'light-content'} />
       <FlatList
         pagingEnabled
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }
         onScroll={e =>
           setSelectedIndex(Math.ceil(e.nativeEvent.contentOffset.y / height))
         }
-        data={[
-          require('../../images/storyAssets/video1.mp4'),
-          require('../../images/storyAssets/video2.mp4'),
-          require('../../images/storyAssets/video3.mp4'),
-          require('../../images/storyAssets/video4.mp4'),
-          require('../../images/storyAssets/video1.mp4'),
-          require('../../images/storyAssets/video2.mp4'),
-          require('../../images/storyAssets/video3.mp4'),
-          require('../../images/storyAssets/video4.mp4'),
-        ]}
-        renderItem={({item, index}) => {
-          return (
-            <Box>
-              <Box height={height - 40} bg="black">
-                <Video
-                  source={item}
-                  resizeMode="cover"
-                  repeat
-                  paused={selectedIndex === index ? false : true}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    bottom: 0,
-                    right: 0,
-                    left: 0,
-                  }}
-                />
-                <Box position="absolute" top={0} bottom={0} right={0} left={0}>
-                  <Box
-                    justifyContent="space-between"
-                    alignItems="center"
-                    flexDirection="row"
-                    mt="sm"
-                    zIndex={50}
-                    marginHorizontal="md">
-                    <Text fontSize={20} fontWeight="bold" color="white">
-                      Reels
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => navigation.navigate('AddReels')}>
-                      <Image
-                        source={CameraIcon}
-                        style={{width: 25, height: 25, tintColor: '#fff'}}
-                      />
-                    </TouchableOpacity>
-                  </Box>
-                  <Box
-                    flexDirection="row"
-                    height={'40%'}
-                    width={'100%'}
-                    position="absolute"
-                    bottom={0}>
-                    <Box width={'85%'} position="absolute" bottom={0}>
-                      <Box mt="xl" />
-                      <Box flexDirection="row" alignItems="center" mt="md">
-                        <Box
-                          height={40}
-                          width={40}
-                          bg="lighGray"
-                          borderRadius={20}
-                        />
-                        <Text
-                          color="white"
-                          fontSize={14}
-                          ml="sm"
-                          fontWeight="bold">
-                          Manoj Solanki
-                        </Text>
-                        <Box
-                          ml="md"
-                          px="sm"
-                          borderWidth={1}
-                          borderColor="white"
-                          borderRadius={5}
-                          justifyContent="center"
-                          alignItems="center">
-                          <Text
-                            color="white"
-                            fontSize={14}
-                            ml="sm"
-                            fontWeight="700">
-                            Follow
-                          </Text>
-                        </Box>
-                      </Box>
-                      <Box m="md" mb="lg">
-                        <Text color="white" fontSize={12}>
-                          Save these awesome chrome extenstion fo..
-                        </Text>
-                        <Text color="white" fontSize={12}>
-                          ismaity . GOAT
-                        </Text>
-                      </Box>
-                    </Box>
-                    <Box
-                      width={'15%'}
-                      alignItems="center"
-                      justifyContent="space-around"
-                      position="absolute"
-                      right={0}
-                      bottom={15}
-                      height={'80%'}>
-                      <Box>
-                        <Image
-                          source={LikeIcon}
-                          style={{width: 20, height: 20, tintColor: '#fff'}}
-                        />
-                        <Text color="white" fontSize={10}>
-                          18.4k
-                        </Text>
-                      </Box>
-                      <Box>
-                        <Image
-                          source={CommentIcon}
-                          style={{width: 20, height: 20, tintColor: '#fff'}}
-                        />
-                        <Text color="white" fontSize={10}>
-                          18.4k
-                        </Text>
-                      </Box>
-                      <Box>
-                        <Image
-                          source={ShareIcon}
-                          style={{width: 20, height: 20, tintColor: '#fff'}}
-                        />
-                        <Text color="white" fontSize={10}>
-                          18.4k
-                        </Text>
-                      </Box>
-                      <Box>
-                        <Image
-                          source={ThreeDotsIcon}
-                          style={{width: 20, height: 20, tintColor: '#fff'}}
-                        />
-                        <Text color="white" fontSize={10}>
-                          18.4k
-                        </Text>
-                      </Box>
-                      <Box>
-                        <Image
-                          source={MusicIcon}
-                          style={{width: 20, height: 20}}
-                        />
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-              </Box>
-              <TapGestureHandler
-                maxDelayMs={550}
-                numberOfTaps={2}
-                onActivated={doubleTap}>
-                <Animated.View
-                  style={{
-                    position: 'absolute',
-                    top: 40,
-                    height,
-                    width,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <ImageComponent
-                    source={LikeFillIcon}
-                    style={[
-                      {width: 100, height: 100, tintColor: '#fff'},
-                      animatedStyle,
-                    ]}
-                  />
-                </Animated.View>
-              </TapGestureHandler>
-            </Box>
-          );
-        }}
+        data={reels}
+        renderItem={({item, index}) => (
+          <Reel item={item} index={index} selectedIndex={selectedIndex} />
+        )}
       />
     </Box>
   );
