@@ -5,7 +5,7 @@ import {IRootStackParamList, IRootTabParamList} from './types';
 import Home from '../screens/home/Home';
 import Search from '../screens/search/Search';
 import AddPost from '../screens/addpost/AddPost';
-import Reels from '../screens/Reels';
+import Reels from '../screens/reels/Reels';
 import Profile from '../screens/Profile';
 import {p} from '../themes/light';
 import Box from '../themes/Box';
@@ -77,6 +77,10 @@ const BottomTabNavigator = () => {
             </Box>
           ),
           headerTitleAlign: 'left',
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
+          },
         }}
       />
       <Tab.Screen
