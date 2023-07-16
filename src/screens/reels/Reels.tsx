@@ -6,9 +6,9 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import React, {FC, useCallback, useEffect, useState} from 'react';
-import Box from '../themes/Box';
+import Box from '../../themes/Box';
 import Video from 'react-native-video';
-import Text from '../themes/Text';
+import Text from '../../themes/Text';
 import {
   CameraIcon,
   CommentIcon,
@@ -17,7 +17,7 @@ import {
   MusicIcon,
   ShareIcon,
   ThreeDotsIcon,
-} from '../images';
+} from '../../images';
 import {TapGestureHandler} from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedStyle,
@@ -27,9 +27,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {IRootStackParamList, IRootTabParamList} from '../navigation/types';
+import {IRootStackParamList, IRootTabParamList} from '../../navigation/types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {p} from '../themes/light';
+import {p} from '../../themes/light';
 
 const ImageComponent = Animated.createAnimatedComponent(Image);
 type IProps = CompositeScreenProps<
@@ -66,14 +66,14 @@ const Reels: FC<IProps> = ({navigation}) => {
           setSelectedIndex(Math.ceil(e.nativeEvent.contentOffset.y / height))
         }
         data={[
-          require('../images/storyAssets/video1.mp4'),
-          require('../images/storyAssets/video2.mp4'),
-          require('../images/storyAssets/video3.mp4'),
-          require('../images/storyAssets/video4.mp4'),
-          require('../images/storyAssets/video1.mp4'),
-          require('../images/storyAssets/video2.mp4'),
-          require('../images/storyAssets/video3.mp4'),
-          require('../images/storyAssets/video4.mp4'),
+          require('../../images/storyAssets/video1.mp4'),
+          require('../../images/storyAssets/video2.mp4'),
+          require('../../images/storyAssets/video3.mp4'),
+          require('../../images/storyAssets/video4.mp4'),
+          require('../../images/storyAssets/video1.mp4'),
+          require('../../images/storyAssets/video2.mp4'),
+          require('../../images/storyAssets/video3.mp4'),
+          require('../../images/storyAssets/video4.mp4'),
         ]}
         renderItem={({item, index}) => {
           return (

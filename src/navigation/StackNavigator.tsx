@@ -9,7 +9,7 @@ import Splash from '../screens/Splash';
 import ShowStory from '../screens/ShowStory';
 import Login from '../screens/Login';
 import EditProfile from '../screens/EditProfile';
-import AddReels from '../screens/addreels/AddReels';
+import AddReels from '../screens/reels/AddReels';
 
 const Stack = createNativeStackNavigator<IRootStackParamList>();
 
