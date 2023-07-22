@@ -6,7 +6,7 @@ import {
   ScrollView,
   StatusBar,
 } from 'react-native';
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {IRootStackParamList, IRootTabParamList} from '../../navigation/types';
 import {CompositeScreenProps, useIsFocused} from '@react-navigation/native';
@@ -23,12 +23,10 @@ import {
 import Text from '../../themes/Text';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import firestore from '@react-native-firebase/firestore';
-import SingleStory from '../../components/SingleStory';
 import Stories from '../../components/Stories';
 import PostGrid from '../../components/PostGrid';
 import ReelsGrid from '../../components/ReelsGrid';
 import TagPostGrid from '../../components/TagPostGrid';
-import ProfileTabNavigator from '../../navigation/ProfileTabNavigator';
 import {p} from '../../themes/light';
 import ProfileBottomSheet from './ProfileBottomSheet';
 
@@ -48,7 +46,7 @@ export interface IUser {
 const Profile: FC<IProps> = ({navigation}) => {
   const {width} = useWindowDimensions();
   const [profile, setProfile] = useState<IUser>();
-  // const [activeTab, setActiveTab] = useState<'POST' | 'REELS' | 'TAGS'>('POST');
+  const [activeTab, setActiveTab] = useState<'POST' | 'REELS' | 'TAGS'>('POST');
   const [isCreateOpen, setIsCreateOpen] = useState<-1 | 0 | 1>(-1);
 
   const isFocus = useIsFocused();
@@ -186,8 +184,84 @@ const Profile: FC<IProps> = ({navigation}) => {
           <FlatList data={[1]} renderItem={() => <Stories />} />
         </Box>
       </Box>
-
+      {/* /** -------> this is normal tab bar code without navigation <-----  */}
       {/* <ProfileTabNavigator /> */}
+      <Box
+        mt="sm"
+        flexDirection="row"
+        justifyContent="space-evenly"
+        borderBottomWidth={0.5}
+        borderColor="xLighGray"
+        alignItems="center">
+        <TouchableOpacity onPress={() => setActiveTab('POST')}>
+          <Box
+            borderColor="black"
+            borderBottomWidth={activeTab === 'POST' ? 1 : 0}
+            width={width / 3}
+            height={30}
+            justifyContent="center"
+            alignItems="center"
+            pb="sm">
+            <Image
+              source={GridIcon}
+              style={{
+                width: 25,
+                height: 25,
+                tintColor: activeTab === 'POST' ? '#000' : '#888',
+              }}
+            />
+          </Box>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setActiveTab('REELS')}>
+          <Box
+            borderColor="black"
+            borderBottomWidth={activeTab === 'REELS' ? 1 : 0}
+            width={width / 3}
+            height={30}
+            justifyContent="center"
+            alignItems="center"
+            pb="sm">
+            <Image
+              source={ReelsIcon}
+              style={{
+                width: 25,
+                height: 25,
+                tintColor: activeTab === 'REELS' ? '#000' : '#888',
+              }}
+            />
+          </Box>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setActiveTab('TAGS')}>
+          <Box
+            borderColor="black"
+            borderBottomWidth={activeTab === 'TAGS' ? 1 : 0}
+            width={width / 3}
+            height={30}
+            justifyContent="center"
+            alignItems="center"
+            pb="sm">
+            <Image
+              source={TagIcon}
+              style={{
+                width: 33,
+                height: 33,
+                tintColor: activeTab === 'TAGS' ? '#000' : '#888',
+              }}
+            />
+          </Box>
+        </TouchableOpacity>
+      </Box>
+
+      <Box>
+        {activeTab === 'POST' ? (
+          <PostGrid profile={profile} />
+        ) : activeTab === 'REELS' ? (
+          <ReelsGrid />
+        ) : (
+          <TagPostGrid />
+        )}
+      </Box>
+
       <ProfileBottomSheet
         isCreateOpen={isCreateOpen}
         setIsCreateOpen={setIsCreateOpen}
@@ -196,86 +270,4 @@ const Profile: FC<IProps> = ({navigation}) => {
   );
 };
 
-export default Profile;
-
-/** -------> this is normal tab bar code without navigation <----- */
-
-{
-  /* <Box
-          mt="sm"
-          flexDirection="row"
-          justifyContent="space-evenly"
-          borderBottomWidth={0.5}
-          borderColor="xLighGray"
-          alignItems="center">
-          <TouchableOpacity onPress={() => setActiveTab('POST')}>
-            <Box
-              borderColor="black"
-              borderBottomWidth={activeTab === 'POST' ? 1 : 0}
-              width={width / 3}
-              height={30}
-              justifyContent="center"
-              alignItems="center"
-              pb="sm">
-              <Image
-                source={GridIcon}
-                style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: activeTab === 'POST' ? '#000' : '#888',
-                }}
-              />
-            </Box>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setActiveTab('REELS')}>
-            <Box
-              borderColor="black"
-              borderBottomWidth={activeTab === 'REELS' ? 1 : 0}
-              width={width / 3}
-              height={30}
-              justifyContent="center"
-              alignItems="center"
-              pb="sm">
-              <Image
-                source={ReelsIcon}
-                style={{
-                  width: 25,
-                  height: 25,
-                  tintColor: activeTab === 'REELS' ? '#000' : '#888',
-                }}
-              />
-            </Box>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setActiveTab('TAGS')}>
-            <Box
-              borderColor="black"
-              borderBottomWidth={activeTab === 'TAGS' ? 1 : 0}
-              width={width / 3}
-              height={30}
-              justifyContent="center"
-              alignItems="center"
-              pb="sm">
-              <Image
-                source={TagIcon}
-                style={{
-                  width: 33,
-                  height: 33,
-                  tintColor: activeTab === 'TAGS' ? '#000' : '#888',
-                }}
-              />
-            </Box>
-          </TouchableOpacity>
-        </Box> */
-}
-
-{
-  /* <Box>
-          {activeTab === 'POST' ? (
-            <PostGrid />
-          ) : activeTab === 'REELS' ? (
-            <ReelsGrid />
-          ) : (
-            <TagPostGrid />
-          )}
-        </Box> */
-}
+export default memo(Profile);

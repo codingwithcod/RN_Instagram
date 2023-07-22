@@ -1,11 +1,14 @@
-import {View, Text} from 'react-native';
 import React from 'react';
+import Box from '../themes/Box';
+import Text from '../themes/Text';
 
 const TagPostGrid = () => {
   return (
-    <View>
-      <Text>TagPostGrid</Text>
-    </View>
+    <Box height={'60%'} justifyContent="center" alignItems="center">
+      <Text fontSize={16} color="black">
+        There is No Tag Post
+      </Text>
+    </Box>
   );
 };
 
