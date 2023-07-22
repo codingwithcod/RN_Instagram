@@ -1,4 +1,4 @@
-import React, {FC, memo, useCallback} from 'react';
+import React, {FC, memo, useCallback, useEffect, useState} from 'react';
 import Box from '../../themes/Box';
 import Text from '../../themes/Text';
 import {Image} from 'react-native';
@@ -18,15 +18,19 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import {TapGestureHandler} from 'react-native-gesture-handler';
+import firestore from '@react-native-firebase/firestore';
 
 interface IProps {
   item: IPost;
-  singleStoryItem: any;
+  userId: string | undefined;
 }
 
 const ImageComponent = Animated.createAnimatedComponent(Image);
 
-const Post: FC<IProps> = ({item, singleStoryItem}) => {
+const Post: FC<IProps> = ({item, userId}) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const [post, setPost] = useState(item);
+
   const scale = useSharedValue(0);
   const doubleTap = useCallback(() => {
     scale.value = withSpring(1, undefined, isFinished => {
@@ -34,15 +38,49 @@ const Post: FC<IProps> = ({item, singleStoryItem}) => {
         scale.value = withDelay(300, withSpring(0));
       }
     });
-    // console.log('======================');
+    likePost(item.postId);
   }, []);
-  console.log('!!!!!!!!!!!!!!!!!!!! i am Post !!!!!!!!!!!! ');
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{scale: Math.max(scale.value, 0)}],
     };
   });
+
+  const likePost = async (id: string) => {
+    if (isLiked) {
+      return;
+    }
+    setIsLiked(true);
+    setPost(prev => {
+      const {likes, ...rest} = prev;
+      likes.push('userId');
+      return prev;
+    });
+    firestore()
+      .collection('posts')
+      .doc(id)
+      .update({likes: firestore.FieldValue.arrayUnion(userId)})
+      .then(res => {
+        // console.log('---- res ----> ', res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    checkIsPostLiked();
+  }, []);
+
+  const checkIsPostLiked = useCallback(() => {
+    if (userId) {
+      const isLiked = item.likes?.find(like => (like = userId));
+      if (isLiked) {
+        setIsLiked(true);
+      }
+    }
+  }, []);
 
   return (
     <Box>
@@ -115,7 +153,10 @@ const Post: FC<IProps> = ({item, singleStoryItem}) => {
         m="sm"
         mx="md">
         <Box flexDirection="row">
-          <Image source={LikeIcon} style={{width: 20, height: 20}} />
+          <Image
+            source={isLiked ? LikeFillIcon : LikeIcon}
+            style={{width: 20, height: 20}}
+          />
           <Box mx="sm" />
           <Image source={CommentIcon} style={{width: 20, height: 20}} />
           <Box mx="sm" />

@@ -29,7 +29,7 @@ const ConfirmGalleryModal: FC<IProps> = ({
   const handleOpenCamera = async () => {
     const isPermission = await requestCameraPermission();
     if (isPermission) {
-      const res = await launchCamera({mediaType: 'photo', quality: 0.8});
+      const res = await launchCamera({mediaType: 'photo', quality: 0.3});
       if (!res.didCancel) {
         setImageData(res);
         setIsModalOpen(false);
@@ -39,7 +39,7 @@ const ConfirmGalleryModal: FC<IProps> = ({
   const handleOpenGallery = async () => {
     const isPermission = await requestCameraPermission();
     if (isPermission) {
-      const res = await launchImageLibrary({mediaType: 'photo', quality: 0.5});
+      const res = await launchImageLibrary({mediaType: 'photo', quality: 0.4});
       if (!res.didCancel) {
         setImageData(res);
         setIsModalOpen(false);

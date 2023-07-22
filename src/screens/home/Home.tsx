@@ -12,6 +12,7 @@ import {IRootStackParamList, IRootTabParamList} from '../../navigation/types';
 import Box from '../../themes/Box';
 import Post from './Post';
 import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type IProps = CompositeScreenProps<
   BottomTabScreenProps<IRootTabParamList, 'Home'>,
@@ -36,6 +37,7 @@ export interface IPost {
 
 const Home: FC<IProps> = ({navigation}) => {
   const [posts, setPosts] = useState<IPost[]>([]);
+  const [userId, setUserId] = useState<string>();
   const [refresing, setRefreshing] = useState<boolean>(false);
 
   useEffect(() => {
@@ -60,7 +62,15 @@ const Home: FC<IProps> = ({navigation}) => {
       ),
     });
     getAllPost();
+    getUserId();
   }, [navigation]);
+
+  const getUserId = async () => {
+    const userId = await AsyncStorage.getItem('USERID');
+    if (userId) {
+      setUserId(userId);
+    }
+  };
 
   const getAllPost = async () => {
     console.log('----------- i am  getAll post --->');
@@ -98,7 +108,7 @@ const Home: FC<IProps> = ({navigation}) => {
         ListHeaderComponent={() => <Stories />}
         renderItem={({item}) => (
           <>
-            <Post item={item} singleStoryItem={singleStoryItem} />
+            <Post item={item} userId={userId} />
           </>
         )}
       />
