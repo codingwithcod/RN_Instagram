@@ -9,13 +9,14 @@ import {
   Image,
   KeyboardAvoidingView,
   ScrollView,
+  StatusBar,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
 import {CameraIcon} from '../../images';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {p} from '../../themes/light';
-import BottomModal from './BottomModal';
+import ConfirmGalleryModal from '../../components/ConfirmGalleryModal';
 import Loader from '../../components/Loader';
 import {ImagePickerResponse} from 'react-native-image-picker';
 import uploadFile from '../../utils/uploadFile';
@@ -100,8 +101,9 @@ const AddPost: FC<IProps> = ({navigation}) => {
 
   return (
     <ScrollView style={{flex: 1}}>
-      <Box flex={1} p="sm" alignItems="center">
-        <Box height={300} width={'100%'} borderWidth={0.5} borderRadius={10}>
+      <StatusBar backgroundColor={p.white} />
+      <Box flex={1} p="sm" px="md" alignItems="center">
+        <Box height={300} width={'100%'} borderRadius={10}>
           <TouchableOpacity onPress={() => setIsModalOpen(true)}>
             {imageData.assets ? (
               <Box width={'100%'} height={'100%'}>
@@ -116,9 +118,12 @@ const AddPost: FC<IProps> = ({navigation}) => {
                 height={'100%'}
                 justifyContent="center"
                 alignItems="center"
-                style={{backgroundColor: 'rgba(0,0,255,0.051)'}}>
-                <Image source={CameraIcon} style={{width: 50, height: 50}} />
-                <Text fontSize={20} mt="sm">
+                style={{backgroundColor: 'rgba(0,0,0,0)'}}>
+                <Image
+                  source={CameraIcon}
+                  style={{width: 50, height: 50, tintColor: p.black}}
+                />
+                <Text fontSize={20} mt="sm" color="black">
                   Tap to upload an image
                 </Text>
               </Box>
@@ -131,6 +136,7 @@ const AddPost: FC<IProps> = ({navigation}) => {
             width={'100%'}
             flexDirection="row"
             py="sm"
+            pb="xs"
             borderBottomWidth={0.51}
             borderColor="black">
             <Box
@@ -173,7 +179,7 @@ const AddPost: FC<IProps> = ({navigation}) => {
           </Box>
         </TouchableOpacity>
 
-        <BottomModal
+        <ConfirmGalleryModal
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
           setImageData={setImageData}

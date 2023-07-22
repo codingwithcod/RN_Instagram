@@ -6,7 +6,7 @@ import Home from '../screens/home/Home';
 import Search from '../screens/search/Search';
 import AddPost from '../screens/addpost/AddPost';
 import Reels from '../screens/reels/Reels';
-import Profile from '../screens/Profile';
+import Profile from '../screens/profile/Profile';
 import {p} from '../themes/light';
 import Box from '../themes/Box';
 import {

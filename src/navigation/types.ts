@@ -1,10 +1,12 @@
+import {IUser} from '../screens/profile/Profile';
+
 export type IRootStackParamList = {
   Splash: undefined;
   Login: undefined;
   Main: undefined;
   Notifications: undefined;
   ShowStory: undefined;
-  EditProfile: undefined;
+  EditProfile: {profile: IUser | undefined};
   AddReels: undefined;
 };
 
