@@ -84,7 +84,7 @@ const Profile: FC<IProps> = ({navigation}) => {
       ),
     });
     getProfileInfo();
-  }, [navigation, isFocus]);
+  }, [navigation, isFocus, profile]);
 
   const getProfileInfo = async () => {
     const email = await AsyncStorage.getItem('USER_EMAIL');
