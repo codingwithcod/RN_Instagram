@@ -29,8 +29,8 @@ import PostGrid from '../../components/PostGrid';
 import ReelsGrid from '../../components/ReelsGrid';
 import TagPostGrid from '../../components/TagPostGrid';
 import ProfileTabNavigator from '../../navigation/ProfileTabNavigator';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {p} from '../../themes/light';
+import ProfileBottomSheet from './ProfileBottomSheet';
 
 type IProps = CompositeScreenProps<
   BottomTabScreenProps<IRootTabParamList, 'Profile'>,
@@ -48,7 +48,8 @@ export interface IUser {
 const Profile: FC<IProps> = ({navigation}) => {
   const {width} = useWindowDimensions();
   const [profile, setProfile] = useState<IUser>();
-  const [activeTab, setActiveTab] = useState<'POST' | 'REELS' | 'TAGS'>('POST');
+  // const [activeTab, setActiveTab] = useState<'POST' | 'REELS' | 'TAGS'>('POST');
+  const [isCreateOpen, setIsCreateOpen] = useState<-1 | 0 | 1>(-1);
 
   const isFocus = useIsFocused();
 
@@ -68,14 +69,13 @@ const Profile: FC<IProps> = ({navigation}) => {
             </Box>
           </Box>
           <Box flexDirection="row" width={'20%'} justifyContent="space-between">
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Notifications')}>
+            <TouchableOpacity onPress={() => setIsCreateOpen(0)}>
               <Image
                 source={PlusIcon}
                 style={{width: 23, height: 23, tintColor: '#000'}}
               />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setIsCreateOpen(1)}>
               <Image
                 source={MenuIcon}
                 style={{width: 23, height: 23, tintColor: '#000'}}
@@ -100,19 +100,8 @@ const Profile: FC<IProps> = ({navigation}) => {
       });
   };
 
-  const singOut = async () => {
-    GoogleSignin.signOut()
-      .then(res => {
-        console.log('---- singOut res ------>', res);
-        navigation.navigate('Login');
-      })
-      .catch(err => {
-        console.log('---- singOut err ------>', err);
-      });
-  };
-
   return (
-    <Box>
+    <Box flex={1}>
       <StatusBar backgroundColor={p.white} />
 
       <Box mx="md">
@@ -192,25 +181,27 @@ const Profile: FC<IProps> = ({navigation}) => {
             </Box>
           </TouchableOpacity>
           <Box my="sm" />
-          <TouchableOpacity onPress={() => singOut()}>
-            <Box
-              bg="xLighGray"
-              justifyContent="center"
-              alignItems="center"
-              p="xs"
-              borderRadius={5}>
-              <Text fontSize={16} color="black">
-                Logout
-              </Text>
-            </Box>
-          </TouchableOpacity>
         </Box>
         <Box mt="xs">
           <FlatList data={[1]} renderItem={() => <Stories />} />
         </Box>
       </Box>
 
-      {/* <Box
+      {/* <ProfileTabNavigator /> */}
+      <ProfileBottomSheet
+        isCreateOpen={isCreateOpen}
+        setIsCreateOpen={setIsCreateOpen}
+      />
+    </Box>
+  );
+};
+
+export default Profile;
+
+/** -------> this is normal tab bar code without navigation <----- */
+
+{
+  /* <Box
           mt="sm"
           flexDirection="row"
           justifyContent="space-evenly"
@@ -274,9 +265,11 @@ const Profile: FC<IProps> = ({navigation}) => {
               />
             </Box>
           </TouchableOpacity>
-        </Box> */}
+        </Box> */
+}
 
-      {/* <Box>
+{
+  /* <Box>
           {activeTab === 'POST' ? (
             <PostGrid />
           ) : activeTab === 'REELS' ? (
@@ -284,10 +277,5 @@ const Profile: FC<IProps> = ({navigation}) => {
           ) : (
             <TagPostGrid />
           )}
-        </Box> */}
-      <ProfileTabNavigator />
-    </Box>
-  );
-};
-
-export default Profile;
+        </Box> */
+}
